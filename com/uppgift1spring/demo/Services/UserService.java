@@ -16,9 +16,9 @@ public class UserService {
         this._userRepository = _userRepository;
     }
 
-    public String createUser(User user){
+    public User createUser(User user){
         boolean userAlreadyExist = _userRepository.userAlreadyExist(user);
-        return userAlreadyExist ? "User Already Exists!" : _userRepository.createUser(user);
+        return userAlreadyExist ? null : _userRepository.createUser(user);
     }
     public ArrayList<User> getAllUsers(){
         return _userRepository.getAllUsers();
@@ -29,7 +29,7 @@ public class UserService {
 
     public User updateUser(User user,String name){
         User userToUpdate = findUser(name);
-        if(userToUpdate == null) throw new NullPointerException();
+        if(userToUpdate == null) return null;
         return _userRepository.updateUser(user,userToUpdate,name);
     }
 }

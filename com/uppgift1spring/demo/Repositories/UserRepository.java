@@ -10,9 +10,9 @@ import java.util.ArrayList;
 public class UserRepository {
 ArrayList<User> UserList = new ArrayList<>();
 
-        public String createUser(User user){
+        public User createUser(User user){
             UserList.add(user);
-            return "User Created!";
+            return user;
         }
 
         public ArrayList<User> getAllUsers(){

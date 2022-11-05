@@ -18,23 +18,27 @@ public class UsersController {
         return _userService.getAllUsers();
     }
     @GetMapping("/getUser/{name}")
-    public ResponseEntity<User> getUser(@PathVariable String name){
+    public ResponseEntity<?> getUser(@PathVariable String name){
         User findUser = _userService.findUser(name);
         if(findUser == null){
-            return ResponseEntity.status(404).build();
+            return ResponseEntity.status(404).body("User not found.");
         }
         return ResponseEntity.ok(findUser);
     }
 
-    @PostMapping("/addUser")
-    public String addUsers(@RequestBody User user){
-        return _userService.createUser(user);
+    @PostMapping("/createUser")
+    public ResponseEntity<?> createUser(@RequestBody User user){
+        User userToUpdate = _userService.createUser(user);
+        if(userToUpdate == null){
+            return ResponseEntity.status(404).body("User already exists.");
+        }
+        return ResponseEntity.ok(userToUpdate);
     }
     @PutMapping("/updateUser/{name}")
-    public ResponseEntity<User> updateUser(@PathVariable String name, @RequestBody User user){
+    public ResponseEntity<?> updateUser(@PathVariable String name, @RequestBody User user){
         User userToUpdate = _userService.updateUser(user,name);
         if(userToUpdate == null){
-            return ResponseEntity.status(404).build();
+            return ResponseEntity.status(404).body("User not found.");
         }
         return ResponseEntity.ok(userToUpdate);
     }
